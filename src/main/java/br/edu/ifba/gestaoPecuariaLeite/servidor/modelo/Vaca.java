@@ -3,12 +3,12 @@ package br.edu.ifba.gestaoPecuariaLeite.servidor.modelo;
 public class Vaca implements Comparable<Vaca> {
     private String id = "";
     private String nome = "";
-    private boolean estaOrdenhada = false;
+    private boolean poducaoDentroDaMedia = false;
 
-    public Vaca(String id, String nome, boolean estaOrdenhada) {
+    public Vaca(String id, String nome, boolean poducaoDentroDaMedia) {
         this.id = id;
         this.nome = nome;
-        this.estaOrdenhada = estaOrdenhada;
+        this.poducaoDentroDaMedia = poducaoDentroDaMedia;
     }
 
     public String getId() {
@@ -19,8 +19,8 @@ public class Vaca implements Comparable<Vaca> {
         return nome;
     }
 
-    public boolean isEstaOrdenhada() {
-        return estaOrdenhada;
+    public boolean isPoducaoDentroDaMedia() {
+        return poducaoDentroDaMedia;
     }
 
     @Override

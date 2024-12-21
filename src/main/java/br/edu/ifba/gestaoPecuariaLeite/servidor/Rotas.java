@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 public class Rotas {
 
     private static Operacoes<Vaca, Leite> operacoes = null;
+    private static final int PRODUCAO_DENTRO_DA_MEDIA = 1;
     public static Operacoes<Vaca, Leite> getOperacoes() {
         if (operacoes == null) {
             operacoes = new OperacoesImpl();
@@ -39,7 +40,7 @@ public class Rotas {
             @PathParam("idVaca") String idVaca,
             @PathParam("nomeVaca") String nomeVaca,
             @PathParam("quantidadeLeite") Integer quantidadeLeite,
-            @PathParam("producaoBaixa") Integer producaoBaixa
+            @PathParam("producaoBaixa") Integer producaoDentreDaMedia
     ) {
         try {
             idVaca = URLDecoder.decode(idVaca, StandardCharsets.UTF_8.toString());
@@ -48,7 +49,8 @@ public class Rotas {
             e.printStackTrace();
             return "Erro ao decodificar parâmetros: " + e.getMessage();
         }
-        Vaca vaca = new Vaca(idVaca, nomeVaca, true);
+        boolean producaoOk = producaoDentreDaMedia == PRODUCAO_DENTRO_DA_MEDIA;
+        Vaca vaca = new Vaca(idVaca, nomeVaca, producaoOk);
         Leite leite = new Leite(quantidadeLeite);
         try {
             getOperacoes().gravarOrdenha(vaca, leite);

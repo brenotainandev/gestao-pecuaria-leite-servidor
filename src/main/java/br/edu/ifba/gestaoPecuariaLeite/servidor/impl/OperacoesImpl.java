@@ -4,44 +4,54 @@ import br.edu.ifba.gestaoPecuariaLeite.servidor.modelo.Leite;
 import br.edu.ifba.gestaoPecuariaLeite.servidor.modelo.Vaca;
 import br.edu.ifba.gestaoPecuariaLeite.servidor.operacoes.Operacoes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class OperacoesImpl implements Operacoes<Vaca, Leite> {
+
     private Map<Vaca, List<Leite>> bancoDeDados = new TreeMap<>();
+    private static final int PRODUCAO_ABAXO_MEDIA = 0;
 
     /**
-     * complexidade linear, O(N)
+     * Registra a ordenha de uma vaca, associando a quantidade de leite produzida.
+     * Se a vaca ainda não existir no banco de dados, ela será adicionada manualmente.
+     *
+     * Complexidade: O(N), onde N é o número de vacas no banco de dados.
+     *
+     * @param vaca   A vaca monitorada.
+     * @param leite  A quantidade de leite produzida.
      */
     @Override
-    public void gravarOrdenha(Vaca monitorado, Leite sensor) {
-        List<Leite> leituras = new ArrayList<>();;
+    public void gravarOrdenha(Vaca vaca, Leite leite) {
+        List<Leite> leituras = bancoDeDados.get(vaca);
 
-        if (bancoDeDados.containsKey(monitorado)) {
-            leituras = bancoDeDados.get(monitorado);
-        } else {
-            bancoDeDados.put(monitorado, leituras);
+        // Se a vaca não estiver no banco de dados, inicializa a lista e adiciona a vaca.
+        if (leituras == null) {
+            leituras = new ArrayList<>();
+            bancoDeDados.put(vaca, leituras);
         }
 
-        leituras.add(sensor);
+        // Adiciona a leitura de leite à lista.
+        leituras.add(leite);
     }
 
     /**
-     * complexidade linear, O(N)
+     * Retorna a lista de vacas que possuem registros de ordenha.
+     *
+     * Complexidade: O(N), onde N é o número de vacas no banco de dados.
+     *
+     * @return Lista de vacas com ordenhas registradas.
      */
     @Override
     public List<Vaca> detectarVacasOrdenhadas() {
         List<Vaca> vacasOrdenhadas = new ArrayList<>();
 
-        for (Vaca vaca : bancoDeDados.keySet()) {
-            List<Leite> leituras = bancoDeDados.get(vaca);
-            if (!leituras.isEmpty()) {
-                vacasOrdenhadas.add(vaca);
+        // Percorre o banco de dados e verifica manualmente registros de ordenha.
+        for (Map.Entry<Vaca, List<Leite>> entry : bancoDeDados.entrySet()) {
+            if (!entry.getValue().isEmpty()) {
+                vacasOrdenhadas.add(entry.getKey());
             }
         }
+
         return vacasOrdenhadas;
     }
-
 }
