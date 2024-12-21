@@ -12,13 +12,12 @@ public class Servidor {
 
     public static HttpServer startServer() {
         final ResourceConfig rc = new ResourceConfig().packages("br.edu.ifba.gestaoPecuariaLeite.servidor");
-
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
     }
 
     public static void main(String[] args) throws IOException {
         final HttpServer server = startServer();
-        System.out.println("aguardando ordenha...");
+        System.out.println("aguardando valores de ordenha...");
         System.in.read();
         server.shutdownNow();
     }
