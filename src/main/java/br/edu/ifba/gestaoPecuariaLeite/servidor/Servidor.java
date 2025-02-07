@@ -18,7 +18,7 @@ public class Servidor {
 
     public static void main(String[] args) throws IOException {
         final HttpServer server = startServer();
-        System.out.println("aguardando biometrias...");
+        System.out.println("aguardando leituras...");
         System.in.read();
         server.shutdownNow();
     }
