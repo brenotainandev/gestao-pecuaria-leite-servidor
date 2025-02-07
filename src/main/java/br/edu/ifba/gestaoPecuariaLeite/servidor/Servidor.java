@@ -18,7 +18,7 @@ public class Servidor {
 
     public static void main(String[] args) throws IOException {
         final HttpServer server = startServer();
-        System.out.println("aguardando ordenhas...");
+        System.out.println("aguardando leituras...");
         System.in.read();
         server.shutdownNow();
     }
